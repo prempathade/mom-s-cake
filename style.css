@@ -1,0 +1,11 @@
+.nav-item{
+  padding-left: 80px;
+  font-size: 20px;
+}
+
+@media (min-width: 480px) {
+      .nav-item {
+        padding-left: 50px;
+      }
+    }
+
