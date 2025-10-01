@@ -64,10 +64,6 @@
     .social-icons a:hover {
       color: #fff;
     }
-    #profile-img {
-  border: 2px solid #d63384;
-}
-
   </style>
 </head>
 <body>
@@ -75,43 +71,21 @@
 <!-- Navbar -->
 <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm sticky-top">
   <div class="container">
-    <a class="navbar-brand" href="index.html"><img src="freepik_assistant_1758007196049.png" alt="Logo" style="height: 80px; width: 80px;"/></a>
+    <a class="navbar-brand" href="#"><img src="freepik_assistant_1758007196049.png" alt="Logo" style="height: 80px; width: 80px;"/></a>
     <h2 class="h2">MOM'S CAKE</h2>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
       <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
       <ul class="navbar-nav position-relative">
-  <li class="nav-item">
-    <a class="nav-link text-danger" href="index.html"><i class="fas fa-house"></i> Home</a>
-  </li>
-  <li class="nav-item">
-    <a class="nav-link" href="shop.html"><i class="fas fa-truck-fast"></i> Shop</a>
-  </li>
-  <li class="nav-item">
-    <a class="nav-link" href="login.html"><i class="fas fa-user-tie"></i> Login</a>
-  </li>
-
-  <!-- ✅ Cart -->
-  <li class="nav-item position-relative">
-    <a class="nav-link" href="cart.html"><i class="fas fa-cart-shopping"></i> Cart</a>
-    <span id="cart-count" class="cart-count">0</span>
-  </li>
-   <!-- 🔹 Profile Section -->
-        <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle d-flex align-items-center" href="#" id="profileDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-            <img id="profile-pic" src="default-profile.png" alt="Profile" class="rounded-circle me-2" style="width:35px; height:35px; object-fit:cover;">
-            <span id="profile-name">Profile</span>
-          </a>
-          <ul class="dropdown-menu" aria-labelledby="profileDropdown">
-            <li><a class="dropdown-item" href="profile.html"><i class="fas fa-user"></i> My Profile</a></li>
-            <li><a class="dropdown-item" href="#"><i class="fas fa-heart"></i> Wishlist</a></li>
-            <li><a class="dropdown-item" href="#"><i class="fas fa-box"></i> My Orders</a></li>
-            <li><hr class="dropdown-divider"></li>
-            <li><a class="dropdown-item text-danger" href="#" onclick="logoutUser()"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
-          </ul>
+        <li class="nav-item"><a class="nav-link text-danger" href="index.html"><i class="fas fa-house"></i> Home</a></li>
+        <li class="nav-item"><a class="nav-link" href="shop.html"><i class="fas fa-truck-fast"></i> Shop</a></li> 
+        <li class="nav-item"><a class="nav-link" href="login.html"><i class="fas fa-user-tie"></i> Login</a></li>
+        <li class="nav-item position-relative">
+          <a class="nav-link" href="cart.html"><i class="fas fa-cart-shopping"></i> Cart</a>
+          <span id="cart-count" class="cart-count">0</span>
         </li>
-
+      </ul>
     </div>
   </div>
 </nav>
@@ -143,7 +117,7 @@
         <img src="butterfly.jpeg" style="height: 400px; width: 100%;" class="card-img-top" alt="Butterfly">
         <div class="card-body">
           <h5 class="card-title">Butterfly</h5>
-          <p class="fw-bold">₹350(1KG)</p>
+          <p class="fw-bold">₹350</p>
           <button class="btn btn-danger add-to-cart" data-name="Butterfly" data-price="350"><i class="fas fa-cart-plus"></i> Add to Cart</button>
           <i class="fas fa-heart like-btn ms-3"></i>
         </div>
@@ -156,7 +130,7 @@
         <img src="dark chocolate.jpeg" style="height: 400px; width: 100%;" class="card-img-top" alt="Dark Chocolate">
         <div class="card-body">
           <h5 class="card-title">Dark Chocolate</h5>
-          <p class="fw-bold">₹350(1KG)</p>
+          <p class="fw-bold">₹350</p>
           <button class="btn btn-danger add-to-cart" data-name="Dark Chocolate" data-price="350"><i class="fas fa-cart-plus"></i> Add to Cart</button>
           <i class="fas fa-heart like-btn ms-3"></i>
         </div>
@@ -169,7 +143,7 @@
         <img src="blue berry cake.jpeg" style="height: 400px; width: 100%;" class="card-img-top" alt="Blueberry Cake">
         <div class="card-body">
           <h5 class="card-title">Blueberry Cake</h5>
-          <p class="fw-bold">₹300(1KG)</p>
+          <p class="fw-bold">₹300</p>
           <button class="btn btn-danger add-to-cart" data-name="Blueberry Cake" data-price="300"><i class="fas fa-cart-plus"></i> Add to Cart</button>
           <i class="fas fa-heart like-btn ms-3"></i>
         </div>
@@ -197,7 +171,7 @@
       <!-- Contact -->
       <div class="col-md-3">
         <h5>Contact Us</h5>
-        <p>Email: prempathade19@gmail.com</p>
+        <p>Email: prempathade19@.com</p>
         <p>Phone: +91 8625962810</p>
         <p>Phone: +91 9881761213</p>
         <p>Address:Near Fortune Hotel Vasmant Road,Parbhani.</p>
@@ -259,71 +233,6 @@
   document.querySelectorAll(".like-btn").forEach(heart => {
     heart.addEventListener("click", () => heart.classList.toggle("liked"));
   });
-</script>
-<script>
-  async function placeOrder() {
-    const orderData = {
-      name: "Prem", // you can replace with login user name
-      items: [
-        { name: "Chocolate Cake", qty: 1 }
-      ],
-      total: 499
-    };
-
-    try {
-      const response = await fetch("http://localhost:5000/order", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify(orderData)
-      });
-
-      const result = await response.json();
-      alert(result.message); // show success or error message
-    } catch (error) {
-      console.error("Error:", error);
-      alert("Failed to send order!");
-    }
-  }
-</script>
-<script>
-  // Load user info if logged in
-const user = JSON.parse(localStorage.getItem("user"));
-if (user) {
-  document.getElementById("profile-name").innerText = user.name || "Profile";
-  // If user has uploaded profile picture, load it
-  if (user.profile_pic) {
-    document.getElementById("profile-img").src = user.profile_pic;
-  }
-}
-
-// Logout function
-function logout() {
-  localStorage.removeItem("user");
-  alert("Logged out successfully!");
-  window.location.href = "login.html";
-}
-
-
-</script>
-<script>
-  // Load profile from localStorage (after login/signup)
-  const userProfile = JSON.parse(localStorage.getItem("userProfile")) || null;
-
-  if (userProfile) {
-    document.getElementById("profile-name").innerText = userProfile.name || "User";
-    if (userProfile.image) {
-      document.getElementById("profile-pic").src = userProfile.image;
-    }
-  }
-
-  // Logout
-  function logoutUser() {
-    localStorage.removeItem("userProfile");
-    alert("Logged out successfully!");
-    window.location.href = "login.html";
-  }
 </script>
 
 </body>
