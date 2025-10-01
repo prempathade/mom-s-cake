@@ -1,20 +1,18 @@
-const express = require("express");
-const bodyParser = require("body-parser");
-const cors = require("cors");
-const mysql = require("mysql2");
-const bcrypt = require("bcrypt"); // for password hashing
 
+// server.js (top)
+require('dotenv').config();
+const express = require('express');
+const mysql = require('mysql2');
 const app = express();
-app.use(cors());
-app.use(bodyParser.json());
+app.use(express.json());
 
-// ✅ Connect to XAMPP MySQL
 const db = mysql.createConnection({
-  host: "localhost",
-  user: "root",     // default XAMPP user
-  password: "",     // default is empty in XAMPP
-  database: "moms_cake"
+  host: process.env.DB_HOST,
+  user: process.env.DB_USER,
+  password: process.env.DB_PASS,
+  database: process.env.DB_NAME,
 });
+
 
 db.connect(err => {
   if (err) throw err;

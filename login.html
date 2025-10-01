@@ -234,6 +234,11 @@
 }));
 </script>
 <script>
+  const API = "mysql://root:olQgvjhWgyrvuwkoXSsNUFsFbTVReyoS@nozomi.proxy.rlwy.net:50533/railway"; // or https://api.momscake.in once DNS is set
+
+// login
+fetch(`${API}/login`, { method: "POST", headers: { "Content-Type":"application/json" }, body: JSON.stringify({email, password}) });
+
 document.getElementById("loginForm").addEventListener("submit", async function(e){
   e.preventDefault();
 
