@@ -73,21 +73,43 @@ body {
 <!-- Navbar -->
 <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm sticky-top">
   <div class="container">
-    <a class="navbar-brand" href="#"><img src="freepik_assistant_1758007196049.png" alt="Logo" style="height: 80px; width: 80px;"/></a>
+    <a class="navbar-brand" href="index.html"><img src="freepik_assistant_1758007196049.png" alt="Logo" style="height: 80px; width: 80px;"/></a>
     <h2 class="h2">MOM'S CAKE</h2>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
       <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
       <ul class="navbar-nav position-relative">
-        <li class="nav-item"><a class="nav-link text-danger" href="index.html"><i class="fas fa-house"></i> Home</a></li>
-        <li class="nav-item"><a class="nav-link" href="shop.html"><i class="fas fa-truck-fast"></i> Shop</a></li> 
-        <li class="nav-item"><a class="nav-link" href="login.html"><i class="fas fa-user-tie"></i> Login</a></li>
-        <li class="nav-item position-relative">
-          <a class="nav-link" href="cart.html"><i class="fas fa-cart-shopping"></i> Cart</a>
-          <span id="cart-count" class="cart-count">0</span>
+  <li class="nav-item">
+    <a class="nav-link text-danger" href="index.html"><i class="fas fa-house"></i> Home</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="shop.html"><i class="fas fa-truck-fast"></i> Shop</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="login.html"><i class="fas fa-user-tie"></i> Login</a>
+  </li>
+
+  <!-- ✅ Cart -->
+  <li class="nav-item position-relative">
+    <a class="nav-link" href="cart.html"><i class="fas fa-cart-shopping"></i> Cart</a>
+    <span id="cart-count" class="cart-count">0</span>
+  </li>
+   <!-- 🔹 Profile Section -->
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle d-flex align-items-center" href="#" id="profileDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            <img id="profile-pic" src="default-profile.png" alt="Profile" class="rounded-circle me-2" style="width:35px; height:35px; object-fit:cover;">
+            <span id="profile-name">Profile</span>
+          </a>
+          <ul class="dropdown-menu" aria-labelledby="profileDropdown">
+            <li><a class="dropdown-item" href="profile.html"><i class="fas fa-user"></i> My Profile</a></li>
+            <li><a class="dropdown-item" href="#"><i class="fas fa-heart"></i> Wishlist</a></li>
+            <li><a class="dropdown-item" href="#"><i class="fas fa-box"></i> My Orders</a></li>
+            <li><hr class="dropdown-divider"></li>
+            <li><a class="dropdown-item text-danger" href="#" onclick="logoutUser()"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
+          </ul>
         </li>
-      </ul>
+
     </div>
   </div>
 </nav>
@@ -103,8 +125,8 @@ body {
         <img src="chocolate cake.jpeg" style="height: 400px;" class="card-img-top" alt="Chocolate Cake">
         <div class="card-body">
           <h5 class="card-title">Chocolate Delight</h5>
-          <p class="fw-bold">₹300</p>
-          <button class="btn btn-danger add-to-cart" data-name="Chocolate Delight" data-price="599"><i class="fas fa-cart-plus"></i> Add to Cart</button>
+          <p class="fw-bold">₹300(1KG)</p>
+          <button class="btn btn-danger add-to-cart" data-name="Chocolate Delight" data-price="300"><i class="fas fa-cart-plus"></i> Add to Cart</button>
           <i class="fas fa-heart like-btn ms-3"></i>
         </div>
       </div>
@@ -113,11 +135,11 @@ body {
     <!-- Cake 2 -->
     <div class="col-md-4">
       <div class="card cake-card">
-        <img src="butter scoch.jpeg" style="height: 400px;" class="card-img-top" alt="Strawberry Cake">
+        <img src="butter scoch.jpeg" style="height: 400px;" class="card-img-top" alt="Butter Scotch">
         <div class="card-body">
           <h5 class="card-title">Butter Scotch</h5>
-          <p class="fw-bold">₹350</p>
-          <button class="btn btn-danger add-to-cart" data-name="Strawberry Bliss" data-price="699"><i class="fas fa-cart-plus"></i> Add to Cart</button>
+          <p class="fw-bold">₹350(1KG)</p>
+          <button class="btn btn-danger add-to-cart" data-name="Butter Scotch" data-price="350"><i class="fas fa-cart-plus"></i> Add to Cart</button>
           <i class="fas fa-heart like-btn ms-3"></i>
         </div>
       </div>
@@ -129,8 +151,8 @@ body {
         <img src="clasic vanilla.jpeg" class="card-img-top" alt="Vanilla Cake">
         <div class="card-body">
           <h5 class="card-title">Classic Vanilla</h5>
-          <p class="fw-bold">₹270</p>
-          <button class="btn btn-danger add-to-cart" data-name="Classic Vanilla" data-price="499"><i class="fas fa-cart-plus"></i> Add to Cart</button>
+          <p class="fw-bold">₹270(1KG)</p>
+          <button class="btn btn-danger add-to-cart" data-name="Classic Vanilla" data-price="270"><i class="fas fa-cart-plus"></i> Add to Cart</button>
           <i class="fas fa-heart like-btn ms-3"></i>
         </div>
       </div>
@@ -142,8 +164,8 @@ body {
         <img src="black forest.jpeg" style="height: 390px;" class="card-img-top" alt="Vanilla Cake">
         <div class="card-body">
           <h5 class="card-title">Black Forest</h5>
-          <p class="fw-bold">₹250</p>
-          <button class="btn btn-danger add-to-cart" data-name="Classic Vanilla" data-price="499"><i class="fas fa-cart-plus"></i> Add to Cart</button>
+          <p class="fw-bold">₹250(1KG)</p>
+          <button class="btn btn-danger add-to-cart" data-name="Black Forest" data-price="250"><i class="fas fa-cart-plus"></i> Add to Cart</button>
           <i class="fas fa-heart like-btn ms-3"></i>
         </div>
       </div>
@@ -156,8 +178,8 @@ body {
         <img src="barbi.jpeg" class="card-img-top" style="height: 390px;" alt="Vanilla Cake">
         <div class="card-body">
           <h5 class="card-title">Barbie Doll</h5>
-          <p class="fw-bold">₹450</p>
-          <button class="btn btn-danger add-to-cart" data-name="Classic Vanilla" data-price="499"><i class="fas fa-cart-plus"></i> Add to Cart</button>
+          <p class="fw-bold">₹450(1KG)</p>
+          <button class="btn btn-danger add-to-cart" data-name="Barbie Doll" data-price="450"><i class="fas fa-cart-plus"></i> Add to Cart</button>
           <i class="fas fa-heart like-btn ms-3"></i>
         </div>
       </div>
@@ -170,8 +192,8 @@ body {
         <img src="choco pink.jpeg" class="card-img-top" style="height: 390px;" alt="Vanilla Cake">
         <div class="card-body">
           <h5 class="card-title">Choco Pink</h5>
-          <p class="fw-bold">₹350</p>
-          <button class="btn btn-danger add-to-cart" data-name="Classic Vanilla" data-price="499"><i class="fas fa-cart-plus"></i> Add to Cart</button>
+          <p class="fw-bold">₹350(1KG)</p>
+          <button class="btn btn-danger add-to-cart" data-name="Choco Pink" data-price="350"><i class="fas fa-cart-plus"></i> Add to Cart</button>
           <i class="fas fa-heart like-btn ms-3"></i>
         </div>
       </div>
@@ -182,9 +204,9 @@ body {
       <div class="card cake-card">
         <img src="doremon.jpeg" class="card-img-top" alt="Vanilla Cake">
         <div class="card-body">
-          <h5 class="card-title">Doraemon</h5>
-          <p class="fw-bold">₹300</p>
-          <button class="btn btn-danger add-to-cart" data-name="Classic Vanilla" data-price="499"><i class="fas fa-cart-plus"></i> Add to Cart</button>
+          <h5 class="card-title">Doraemon Cake</h5>
+          <p class="fw-bold">₹300(1KG)</p>
+          <button class="btn btn-danger add-to-cart" data-name="Doraemon Cake" data-price="300"><i class="fas fa-cart-plus"></i> Add to Cart</button>
           <i class="fas fa-heart like-btn ms-3"></i>
         </div>
       </div>
@@ -197,8 +219,8 @@ body {
         <img src="pink pinapple.jpeg" class="card-img-top" alt="Vanilla Cake">
         <div class="card-body">
           <h5 class="card-title">Pink Pineapple</h5>
-          <p class="fw-bold">₹270</p>
-          <button class="btn btn-danger add-to-cart" data-name="Classic Vanilla" data-price="499"><i class="fas fa-cart-plus"></i> Add to Cart</button>
+          <p class="fw-bold">₹270(1KG)</p>
+          <button class="btn btn-danger add-to-cart" data-name="Pink Pineapple" data-price="270"><i class="fas fa-cart-plus"></i> Add to Cart</button>
           <i class="fas fa-heart like-btn ms-3"></i>
         </div>
       </div>
@@ -211,8 +233,8 @@ body {
         <img src="pinapple cake.jpeg" class="card-img-top" style="height: 380px;" alt="Vanilla Cake">
         <div class="card-body">
           <h5 class="card-title">Pineapple Cake</h5>
-          <p class="fw-bold">₹300</p>
-          <button class="btn btn-danger add-to-cart" data-name="Classic Vanilla" data-price="499"><i class="fas fa-cart-plus"></i> Add to Cart</button>
+          <p class="fw-bold">₹300(1KG)</p>
+          <button class="btn btn-danger add-to-cart" data-name="Pineapple Cake" data-price="300"><i class="fas fa-cart-plus"></i> Add to Cart</button>
           <i class="fas fa-heart like-btn ms-3"></i>
         </div>
       </div>
@@ -224,8 +246,8 @@ body {
         <img src="choco vanila.jpeg" class="card-img-top" style="height: 380px;" alt="Vanilla Cake">
         <div class="card-body">
           <h5 class="card-title">Choco vanila</h5>
-          <p class="fw-bold">₹350</p>
-          <button class="btn btn-danger add-to-cart" data-name="Classic Vanilla" data-price="499"><i class="fas fa-cart-plus"></i> Add to Cart</button>
+          <p class="fw-bold">₹350(1KG)</p>
+          <button class="btn btn-danger add-to-cart" data-name="Choco vanila" data-price="350"><i class="fas fa-cart-plus"></i> Add to Cart</button>
           <i class="fas fa-heart like-btn ms-3"></i>
         </div>
       </div>
@@ -237,8 +259,8 @@ body {
         <img src="double layer.jpeg" class="card-img-top" style="height: 380px;" alt="Vanilla Cake">
         <div class="card-body">
           <h5 class="card-title">Double Layer Cake</h5>
-          <p class="fw-bold">₹500</p>
-          <button class="btn btn-danger add-to-cart" data-name="Classic Vanilla" data-price="499"><i class="fas fa-cart-plus"></i> Add to Cart</button>
+          <p class="fw-bold">₹500(1.5KG)</p>
+          <button class="btn btn-danger add-to-cart" data-name="Double Layer Cake" data-price="500"><i class="fas fa-cart-plus"></i> Add to Cart</button>
           <i class="fas fa-heart like-btn ms-3"></i>
         </div>
       </div>
@@ -250,8 +272,8 @@ body {
         <img src="pineapple.jpeg" class="card-img-top" style="height: 380px;" alt="Vanilla Cake">
         <div class="card-body">
           <h5 class="card-title">Pineapple Strawberry</h5>
-          <p class="fw-bold">₹300</p>
-          <button class="btn btn-danger add-to-cart" data-name="Classic Vanilla" data-price="499"><i class="fas fa-cart-plus"></i> Add to Cart</button>
+          <p class="fw-bold">₹300(1KG)</p>
+          <button class="btn btn-danger add-to-cart" data-name="Pineapple Strawberry" data-price="300"><i class="fas fa-cart-plus"></i> Add to Cart</button>
           <i class="fas fa-heart like-btn ms-3"></i>
         </div>
       </div>
@@ -261,11 +283,11 @@ body {
     <!-- Cake 13 -->
     <div class="col-md-4">
       <div class="card cake-card">
-        <img src="red valvet.jpeg" class="card-img-top" style="height: 380px;" alt="Vanilla Cake">
+        <img src="red Valevet2.jpeg" class="card-img-top" style="height: 380px;" alt="Vanilla Cake">
         <div class="card-body">
           <h5 class="card-title">Red Velvet</h5>
-          <p class="fw-bold">₹300</p>
-          <button class="btn btn-danger add-to-cart" data-name="Classic Vanilla" data-price="499"><i class="fas fa-cart-plus"></i> Add to Cart</button>
+          <p class="fw-bold">₹300(1KG)</p>
+          <button class="btn btn-danger add-to-cart" data-name="Red Velvet" data-price="300"><i class="fas fa-cart-plus"></i> Add to Cart</button>
           <i class="fas fa-heart like-btn ms-3"></i>
         </div>
       </div>
@@ -279,8 +301,8 @@ body {
         <img src="double layer 2.jpeg" class="card-img-top" style="height: 380px;" alt="Vanilla Cake">
         <div class="card-body">
           <h5 class="card-title">Chota Bheem</h5>
-          <p class="fw-bold">₹300</p>
-          <button class="btn btn-danger add-to-cart" data-name="Classic Vanilla" data-price="499"><i class="fas fa-cart-plus"></i> Add to Cart</button>
+          <p class="fw-bold">₹500(1.5KG)</p>
+          <button class="btn btn-danger add-to-cart" data-name="Chota Bheem" data-price="300"><i class="fas fa-cart-plus"></i> Add to Cart</button>
           <i class="fas fa-heart like-btn ms-3"></i>
         </div>
       </div>
@@ -291,11 +313,50 @@ body {
     <!-- Cake 15 -->
     <div class="col-md-4">
       <div class="card cake-card">
+        <img src="birthadaycake2.jpeg" class="card-img-top" style="height: 380px;" alt="Vanilla Cake">
+        <div class="card-body">
+          <h5 class="card-title">Birthday Cake</h5>
+          <p class="fw-bold">₹350(1KG)</p>
+          <button class="btn btn-danger add-to-cart" data-name="Cake" data-price="350"><i class="fas fa-cart-plus"></i> Add to Cart</button>
+          <i class="fas fa-heart like-btn ms-3"></i>
+        </div>
+      </div>
+    </div>
+
+  <!-- Cake 16 -->
+    <div class="col-md-4">
+      <div class="card cake-card">
+        <img src="pinapple2.jpeg" class="card-img-top" style="height: 380px;" alt="Vanilla Cake">
+        <div class="card-body">
+          <h5 class="card-title">Pinapple Cake</h5>
+          <p class="fw-bold">₹300(1KG)</p>
+          <button class="btn btn-danger add-to-cart" data-name="Cake" data-price="300"><i class="fas fa-cart-plus"></i> Add to Cart</button>
+          <i class="fas fa-heart like-btn ms-3"></i>
+        </div>
+      </div>
+    </div>
+
+    <!-- Cake 17 -->
+    <div class="col-md-4">
+      <div class="card cake-card">
         <img src="cake.jpeg" class="card-img-top" style="height: 380px;" alt="Vanilla Cake">
         <div class="card-body">
           <h5 class="card-title">Cake</h5>
-          <p class="fw-bold">₹300</p>
-          <button class="btn btn-danger add-to-cart" data-name="Classic Vanilla" data-price="499"><i class="fas fa-cart-plus"></i> Add to Cart</button>
+          <p class="fw-bold">₹300(1KG)</p>
+          <button class="btn btn-danger add-to-cart" data-name="Cake" data-price="300"><i class="fas fa-cart-plus"></i> Add to Cart</button>
+          <i class="fas fa-heart like-btn ms-3"></i>
+        </div>
+      </div>
+    </div>
+
+    <!-- Cake 18 -->
+    <div class="col-md-4">
+      <div class="card cake-card">
+        <img src="anniversary2.jpeg" class="card-img-top" style="height: 380px;" alt="Vanilla Cake">
+        <div class="card-body">
+          <h5 class="card-title">Annivarsary Cake</h5>
+          <p class="fw-bold">₹350(1KG)</p>
+          <button class="btn btn-danger add-to-cart" data-name="Cake" data-price="350"><i class="fas fa-cart-plus"></i> Add to Cart</button>
           <i class="fas fa-heart like-btn ms-3"></i>
         </div>
       </div>

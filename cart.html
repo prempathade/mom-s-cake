@@ -87,21 +87,43 @@
 <!-- Navbar -->
 <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm sticky-top">
   <div class="container">
-    <a class="navbar-brand" href="#"><img src="freepik_assistant_1758007196049.png" alt="Logo" style="height: 80px; width: 80px;"/></a>
+    <a class="navbar-brand" href="index.html"><img src="freepik_assistant_1758007196049.png" alt="Logo" style="height: 80px; width: 80px;"/></a>
     <h2 class="h2">MOM'S CAKE</h2>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
       <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
       <ul class="navbar-nav position-relative">
-        <li class="nav-item"><a class="nav-link text-danger" href="index.html"><i class="fas fa-house"></i> Home</a></li>
-        <li class="nav-item"><a class="nav-link" href="shop.html"><i class="fas fa-truck-fast"></i> Shop</a></li> 
-        <li class="nav-item"><a class="nav-link" href="login.html"><i class="fas fa-user-tie"></i> Login</a></li>
-        <li class="nav-item position-relative">
-          <a class="nav-link" href="cart.html"><i class="fas fa-cart-shopping"></i> Cart</a>
-          <span id="cart-count" class="cart-count">0</span>
+  <li class="nav-item">
+    <a class="nav-link text-danger" href="index.html"><i class="fas fa-house"></i> Home</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="shop.html"><i class="fas fa-truck-fast"></i> Shop</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="login.html"><i class="fas fa-user-tie"></i> Login</a>
+  </li>
+
+  <!-- ✅ Cart -->
+  <li class="nav-item position-relative">
+    <a class="nav-link" href="cart.html"><i class="fas fa-cart-shopping"></i> Cart</a>
+    <span id="cart-count" class="cart-count">0</span>
+  </li>
+   <!-- Profile Section -->
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle d-flex align-items-center" href="#" id="profileDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            <img id="profile-pic" src="default-profile.png" alt="Profile" class="rounded-circle me-2" style="width:35px; height:35px; object-fit:cover;">
+            <span id="profile-name">Profile</span>
+          </a>
+          <ul class="dropdown-menu" aria-labelledby="profileDropdown">
+            <li><a class="dropdown-item" href="profile.html"><i class="fas fa-user"></i> My Profile</a></li>
+            <li><a class="dropdown-item" href="#"><i class="fas fa-heart"></i> Wishlist</a></li>
+            <li><a class="dropdown-item" href="#"><i class="fas fa-box"></i> My Orders</a></li>
+            <li><hr class="dropdown-divider"></li>
+            <li><a class="dropdown-item text-danger" href="#" onclick="logoutUser()"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
+          </ul>
         </li>
-      </ul>
+
     </div>
   </div>
 </nav>
@@ -123,18 +145,33 @@
   <h4>Total: ₹<span id="total-price">0</span></h4>
 
   <!-- Customer Details -->
-  <h3 class="mt-4">Customer Details</h3>
   <div class="mb-3">
     <label for="customer-name" class="form-label">Your Name</label>
     <input type="text" id="customer-name" class="form-control" required>
   </div>
 
   <div class="mb-3">
+    <label for="customer-mobile" class="form-label">Mobile Number</label>
+    <input type="tel" id="customer-mobile" class="form-control" pattern="[0-9]{10}" maxlength="10" placeholder="Enter 10-digit mobile number" required>
+  </div>
+
+ <div class="mb-3">
+    <label for="customer-wish" class="form-label">Cake Message</label>
+    <input type="text" id="customer-wish" class="form-control" required>
+  </div>
+
+<div class="mb-3">
+  <label for="delivery-date" class="form-label">Delivery Date</label>
+  <input type="date" id="delivery-date" class="form-control" required>
+  <small class="text-muted">Please select a date at least one day later than today.</small>
+</div>
+
+  <div class="mb-3">
     <label for="customer-address" class="form-label">Delivery Address</label>
     <textarea id="customer-address" class="form-control" rows="2" required></textarea>
   </div>
 
-  <!-- Payment Method -->
+  <!-- Payment Section -->
   <h3 class="mt-4">Choose Payment Method</h3>
   <div class="list-group">
     <label class="list-group-item">
@@ -154,21 +191,41 @@
     </label>
   </div>
 
-  <!-- QR Sections -->
-  <div id="qr-gpay" class="qr-section">
-    <h5>Scan to Pay with Google Pay</h5>
-    <img src="gpay.jpeg" alt="GPay QR Code">
+<!-- QR Sections -->
+<div id="qr-gpay" class="qr-section">
+  <h5>Scan to Pay with Google Pay</h5>
+  <img src="gpay.jpeg" alt="GPay QR Code">
+  <p class="mt-2 text-danger fw-bold">👉 Please complete your payment first, then send the screenshot on WhatsApp.</p>
+  <div class="form-check mt-2">
+    <input class="form-check-input" type="checkbox" id="confirm-gpay">
+    <label class="form-check-label" for="confirm-gpay">
+      I have completed the payment
+    </label>
   </div>
-
-  <div id="qr-phonepe" class="qr-section">
-    <h5>Scan to Pay with PhonePe</h5>
-    <img src="phone pay.jpeg" alt="PhonePe QR Code">
-  </div>
-
-  <!-- Proceed Button -->
-  <button class="btn btn-success mt-3" id="checkout-btn" onclick="placeOrder()">Proceed to Pay</button>
+  <a id="whatsapp-gpay" target="_blank" class="btn btn-success mt-2 disabled">
+    <i class="fab fa-whatsapp"></i> Send on WhatsApp
+  </a>
 </div>
 
+<div id="qr-phonepe" class="qr-section">
+  <h5>Scan to Pay with PhonePe</h5>
+  <img src="phone pay.jpeg" alt="PhonePe QR Code">
+  <p class="mt-2 text-danger fw-bold">👉 Please complete your payment first, then send the screenshot on WhatsApp.</p>
+  <div class="form-check mt-2">
+    <input class="form-check-input" type="checkbox" id="confirm-phonepe">
+    <label class="form-check-label" for="confirm-phonepe">
+      I have completed the payment
+    </label>
+  </div>
+  <a id="whatsapp-phonepe" target="_blank" class="btn btn-success mt-2 disabled">
+    <i class="fab fa-whatsapp"></i> Send on WhatsApp
+  </a>
+</div>
+
+
+  <!-- Checkout Button -->
+  <button class="btn btn-success mt-3" id="checkout-btn" onclick="placeOrder()">Proceed to Pay</button>
+</div>
 
 <!-- Footer -->
 <footer class="mt-5">
@@ -188,7 +245,7 @@
       <!-- Contact -->
       <div class="col-md-3">
         <h5>Contact Us</h5>
-        <p>Email: prempathade19@.com</p>
+        <p>Email: prempathade19@gmail.com</p>
         <p>Phone: +91 8625962810</p>
         <p>Phone: +91 9881761213</p>
         <p>Address:Near Fortune Hotel Vasmant Road,Parbhani.</p>
@@ -228,7 +285,12 @@
   </div>
 </footer>
 
+<script>
+  function showOrderSuccess() {
+  alert("✅ Your order has been sent successfully! Please share payment screenshot on WhatsApp (if applicable).");
+}
 
+</script>
 
 
 
@@ -258,81 +320,254 @@
     updateCart();
   }
 
-  // Handle showing correct QR
+  // Handle showing correct QR + button states
   document.querySelectorAll("input[name='payment']").forEach(input => {
     input.addEventListener("change", function() {
+      // Hide all QR sections
       document.querySelectorAll(".qr-section").forEach(qr => qr.style.display = "none");
+
+      const checkoutBtn = document.getElementById("checkout-btn");
+
       if (this.value === "GPay") {
         document.getElementById("qr-gpay").style.display = "block";
+        checkoutBtn.style.display = "none"; // hide Proceed to Pay
       } else if (this.value === "PhonePe") {
         document.getElementById("qr-phonepe").style.display = "block";
-      } else if (this.value === "Paytm") {
-        document.getElementById("qr-paytm").style.display = "block";
+        checkoutBtn.style.display = "none"; // hide Proceed to Pay
+      } else if (this.value === "COD") {
+        checkoutBtn.style.display = "inline-block"; // show button back
       }
     });
   });
 
-    function placeOrder() {
-  // Get cart data
-  let table = document.getElementById("cart-table").getElementsByTagName("tbody")[0];
-  let rows = table.getElementsByTagName("tr");
-  let items = [];
+  async function placeOrder() {
+    let name = document.getElementById("customer-name").value.trim();
+    let mobile = document.getElementById("customer-mobile").value.trim();
+    let wish = document.getElementById("customer-wish").value.trim();
+    let address = document.getElementById("customer-address").value.trim();
+    let deliveryDate = document.getElementById("delivery-date").value;
+    let paymentMethod = document.querySelector('input[name="payment"]:checked');
 
-  for (let i = 0; i < rows.length; i++) {
-    let item = rows[i].getElementsByTagName("td")[0].innerText;
-    let price = rows[i].getElementsByTagName("td")[1].innerText;
-    items.push({ item, price });
+    // Validation
+    if (name === "" || mobile === "" || wish === "" || address === "" || deliveryDate === "") {
+      alert("Please fill in all customer details and select delivery date.");
+      return;
+    }
+
+    if (!/^[0-9]{10}$/.test(mobile)) {
+      alert("Please enter a valid 10-digit mobile number.");
+      return;
+    }
+
+    // Validate date (must be at least tomorrow)
+    let today = new Date();
+    today.setHours(0, 0, 0, 0);
+    let chosenDate = new Date(deliveryDate);
+    if (chosenDate <= today) {
+      alert("Delivery date must be at least one day later.");
+      return;
+    }
+
+    if (!paymentMethod) {
+      alert("Please select a payment method.");
+      return;
+    }
+
+    if (cart.length === 0) {
+      alert("Your cart is empty!");
+      return;
+    }
+   
+    // Case 1: UPI payments (GPay/PhonePe) → Only instructions
+    if (paymentMethod.value === "GPay" || paymentMethod.value === "PhonePe") {
+      alert("Please complete your payment via " + paymentMethod.value +
+            " and send the payment screenshot to WhatsApp number: 8625962810.\n\n" +
+            "Your order will be confirmed after verification.");
+      return; // ❌ Don't send to backend
+    }
+
+    // Case 2: COD → send order normally
+    const orderDetails = {
+      customerNumber: mobile,
+      customerName: name,
+      customerWish: wish,
+      customerAddress: address,
+      deliveryDate: deliveryDate,
+      paymentMethod: paymentMethod.value,
+      total: total,
+      items: cart.map(item => ({ item: item.name, price: item.price }))
+    };
+
+    
+  try {
+      const response = await fetch("http://localhost:5000/order", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(orderDetails)
+      });
+
+      const data = await response.json();
+
+      if (data.success) {
+        alert("Order placed successfully for " + deliveryDate + "! WhatsApp confirmation sent.");
+        cart = [];
+        updateCart();
+        document.getElementById("customer-name").value = "";
+        document.getElementById("customer-mobile").value = "";
+        document.getElementById("customer-wish").value = "";
+        document.getElementById("customer-address").value = "";
+        document.getElementById("delivery-date").value = "";
+      } else {
+        alert("Error placing order: " + data.error);
+      }
+
+    } catch (error) {
+      console.error("Error sending order:", error);
+      alert("Failed to send order. Please try again.");
+    }
   }
 
-  // Get total price
-  let total = document.getElementById("total-price").innerText;
-
-  // Get customer details
-  let customerName = document.getElementById("customer-name").value;
-  let customerAddress = document.getElementById("customer-address").value;
-
-  // Get payment method
-  let paymentMethod = document.querySelector('input[name="payment"]:checked');
-  if (!paymentMethod) {
-    alert("Please select a payment method");
-    return;
-  }
-  paymentMethod = paymentMethod.value;
-
-  // Check if name/address are filled
-  if (!customerName || !customerAddress) {
-    alert("Please enter your Name and Address");
-    return;
-  }
-
-  // Prepare order data
-  let orderData = {
-    items,
-    total,
-    customerName,
-    customerAddress,
-    paymentMethod
-  };
-
-  console.log("Sending Order:", orderData);
-
-  // Send order to backend
-  fetch("http://localhost:5000/order", {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(orderData)
-  })
-    .then(response => response.json())
-    .then(data => {
-      alert("Order placed successfully! ✅ You will get details on WhatsApp.");
-      console.log("Response:", data);
-    })
-    .catch(error => {
-      console.error("Error:", error);
-      alert("❌ Something went wrong. Please try again.");
-    });
-}
-  updateCart()
+  updateCart();
+  
 </script>
+
+<script>
+  // Function to generate WhatsApp link with order details
+  function generateWhatsAppLink(paymentMethod) {
+    let name = document.getElementById("customer-name").value.trim();
+    let mobile = document.getElementById("customer-mobile").value.trim();
+    let wish = document.getElementById("customer-wish").value.trim();
+    let address = document.getElementById("customer-address").value.trim();
+    let deliveryDate = document.getElementById("delivery-date").value;
+
+    // Order items
+    let itemsList = cart.map(item => `• ${item.name} - ₹${item.price}`).join("%0A");
+
+    // Build message
+    let message = `Hi, I have made the payment via ${paymentMethod}.%0A%0A` +
+                  `*Customer Details*%0A` +
+                  `Name: ${name}%0A` +
+                  `Mobile: ${mobile}%0A` +
+                  `Wish: ${wish}%0A` +
+                  `Address: ${address}%0A` +
+                  `Delivery Date: ${deliveryDate}%0A%0A` +
+                  `*Order Items*%0A${itemsList}%0A%0A` +
+                  `Total: ₹${total}%0A%0A` +
+                  `Please find the attached payment screenshot.`;
+
+    return `https://wa.me/918625962810?text=${message}`;
+  }
+
+ document.getElementById("confirm-gpay").addEventListener("change", function() {
+  let btn = document.getElementById("whatsapp-gpay");
+  if (this.checked) {
+    btn.classList.remove("disabled");
+    btn.href = generateWhatsAppLink("Google Pay");
+
+// For GPay
+btn.addEventListener("click", function() {
+  setTimeout(() => {
+    cart = [];
+    total = 0;
+    updateCart();
+    showOrderSuccess(); // ✅ show success alert
+  }, 1000);
+});
+  } else {
+    btn.classList.add("disabled");
+    btn.removeAttribute("href");
+  }
+});
+
+document.getElementById("confirm-phonepe").addEventListener("change", function() {
+  let btn = document.getElementById("whatsapp-phonepe");
+  if (this.checked) {
+    btn.classList.remove("disabled");
+    btn.href = generateWhatsAppLink("PhonePe");
+
+  // For PhonePe
+btn.addEventListener("click", function() {
+  setTimeout(() => {
+    cart = [];
+    total = 0;
+    updateCart();
+    showOrderSuccess(); // ✅ show success alert
+  }, 1000);
+});
+  } else {
+    btn.classList.add("disabled");
+    btn.removeAttribute("href");
+  }
+});
+
+</script>
+<script>
+  async function placeOrder() {
+  let name = document.getElementById("customer-name").value.trim();
+  let mobile = document.getElementById("customer-mobile").value.trim();
+  let wish = document.getElementById("customer-wish").value.trim();
+  let address = document.getElementById("customer-address").value.trim();
+  let deliveryDate = document.getElementById("delivery-date").value;
+  let paymentMethod = document.querySelector('input[name="payment"]:checked');
+
+  // Validation
+  if (name === "" || mobile === "" || wish === "" || address === "" || deliveryDate === "") {
+    alert("Please fill in all customer details and select delivery date.");
+    return;
+  }
+
+  if (!/^[0-9]{10}$/.test(mobile)) {
+    alert("Please enter a valid 10-digit mobile number.");
+    return;
+  }
+
+  // Validate date (must be at least tomorrow)
+  let today = new Date();
+  today.setHours(0, 0, 0, 0);
+  let chosenDate = new Date(deliveryDate);
+  if (chosenDate <= today) {
+    alert("Delivery date must be at least one day later.");
+    return;
+  }
+
+  if (!paymentMethod) {
+    alert("Please select a payment method.");
+    return;
+  }
+
+  if (cart.length === 0) {
+    alert("Your cart is empty!");
+    return;
+  }
+
+  // Build common WhatsApp order message
+  let itemsList = cart.map(item => `• ${item.name} - ₹${item.price}`).join("%0A");
+  let message =
+      `*New Cake Order!*%0A%0A` +
+      `*Customer Details*%0A` +
+      `Name: ${name}%0A` +
+      `Mobile: ${mobile}%0A` +
+      `Wish: ${wish}%0A` +
+      `Address: ${address}%0A` +
+      `Delivery Date: ${deliveryDate}%0A%0A` +
+      `*Order Items*%0A${itemsList}%0A%0A` +
+      `Total: ₹${total}%0A%0A`;
+
+  if (paymentMethod.value === "COD") {
+    message += `Payment Method: Cash on Delivery`;
+    let whatsappLink = `https://wa.me/918625962810?text=${message}`;
+    window.open(whatsappLink, "_blank");
+   
+  }
+    // ✅ Clear cart after sending
+  cart = [];
+  total = 0;
+  updateCart();
+  showOrderSuccess();
+  return;
+}
+
+</script>
+
 </body>
 </html>
