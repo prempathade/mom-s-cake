@@ -257,5 +257,19 @@ fetch(`${API}/login`, { method: "POST", headers: { "Content-Type":"application/j
       .then(data => alert(data));
     });
     </script>
+    <script>
+      fetch("https://momscake.infinityfree.net/signup.php", {
+  method: "POST",
+  headers: { "Content-Type": "application/x-www-form-urlencoded" },
+  body: new URLSearchParams({
+    name: "Prem Pathade",
+    email: "prem@test.com",
+    password: "12345"
+  })
+})
+.then(res => res.text())
+.then(data => console.log(data));
+
+    </script>
 </body>
 </html>
