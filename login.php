@@ -1,8 +1,8 @@
 <?php
-$servername = "sqlXXX.epizy.com"; // from hosting panel
-$username = "your_db_username";
-$password = "your_db_password";
-$dbname = "your_db_name";
+$servername = "sql201.infinityfree.com"; // from hosting panel
+$username = "if0_40072050";
+$password = "Premneha";
+$dbname = "if0_40072050_users";
 
 $conn = new mysqli($servername, $username, $password, $dbname);
 
