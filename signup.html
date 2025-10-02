@@ -241,6 +241,21 @@ fetch(`${API}/login`, { method: "POST", headers: { "Content-Type":"application/j
   });
   
 </script>
-
+<script>
+    document.getElementById("signupForm").addEventListener("submit", function(e) {
+      e.preventDefault();
+      fetch("signup.php", {
+        method: "POST",
+        headers: { "Content-Type": "application/x-www-form-urlencoded" },
+        body: new URLSearchParams({
+          name: document.getElementById("name").value,
+          email: document.getElementById("email").value,
+          password: document.getElementById("password").value
+        })
+      })
+      .then(res => res.text())
+      .then(data => alert(data));
+    });
+    </script>
 </body>
 </html>

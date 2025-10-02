@@ -295,279 +295,141 @@
 
 
 <script>
-  let cart = JSON.parse(localStorage.getItem("cart")) || [];
-  let total = 0;
-  const tbody = document.querySelector("#cart-table tbody");
+    let cart = JSON.parse(localStorage.getItem("cart")) || [];
+    let total = 0;
+    const tbody = document.querySelector("#cart-table tbody");
 
-  function updateCart() {
-    tbody.innerHTML = "";
-    total = 0;
-    cart.forEach((item, index) => {
-      total += item.price;
-      tbody.innerHTML += `
-        <tr>
-          <td>${item.name}</td>
-          <td>₹${item.price}</td>
-          <td><button class="btn btn-sm btn-danger" onclick="removeItem(${index})">Remove</button></td>
-        </tr>`;
-    });
-    document.getElementById("total-price").innerText = total;
-    localStorage.setItem("cart", JSON.stringify(cart));
-  }
-
-  function removeItem(index) {
-    cart.splice(index, 1);
-    updateCart();
-  }
-
-  // Handle showing correct QR + button states
-  document.querySelectorAll("input[name='payment']").forEach(input => {
-    input.addEventListener("change", function() {
-      // Hide all QR sections
-      document.querySelectorAll(".qr-section").forEach(qr => qr.style.display = "none");
-
-      const checkoutBtn = document.getElementById("checkout-btn");
-
-      if (this.value === "GPay") {
-        document.getElementById("qr-gpay").style.display = "block";
-        checkoutBtn.style.display = "none"; // hide Proceed to Pay
-      } else if (this.value === "PhonePe") {
-        document.getElementById("qr-phonepe").style.display = "block";
-        checkoutBtn.style.display = "none"; // hide Proceed to Pay
-      } else if (this.value === "COD") {
-        checkoutBtn.style.display = "inline-block"; // show button back
-      }
-    });
-  });
-
-  async function placeOrder() {
-    let name = document.getElementById("customer-name").value.trim();
-    let mobile = document.getElementById("customer-mobile").value.trim();
-    let wish = document.getElementById("customer-wish").value.trim();
-    let address = document.getElementById("customer-address").value.trim();
-    let deliveryDate = document.getElementById("delivery-date").value;
-    let paymentMethod = document.querySelector('input[name="payment"]:checked');
-
-    // Validation
-    if (name === "" || mobile === "" || wish === "" || address === "" || deliveryDate === "") {
-      alert("Please fill in all customer details and select delivery date.");
-      return;
-    }
-
-    if (!/^[0-9]{10}$/.test(mobile)) {
-      alert("Please enter a valid 10-digit mobile number.");
-      return;
-    }
-
-    // Validate date (must be at least tomorrow)
-    let today = new Date();
-    today.setHours(0, 0, 0, 0);
-    let chosenDate = new Date(deliveryDate);
-    if (chosenDate <= today) {
-      alert("Delivery date must be at least one day later.");
-      return;
-    }
-
-    if (!paymentMethod) {
-      alert("Please select a payment method.");
-      return;
-    }
-
-    if (cart.length === 0) {
-      alert("Your cart is empty!");
-      return;
-    }
-   
-    // Case 1: UPI payments (GPay/PhonePe) → Only instructions
-    if (paymentMethod.value === "GPay" || paymentMethod.value === "PhonePe") {
-      alert("Please complete your payment via " + paymentMethod.value +
-            " and send the payment screenshot to WhatsApp number: 8625962810.\n\n" +
-            "Your order will be confirmed after verification.");
-      return; // ❌ Don't send to backend
-    }
-
-    // Case 2: COD → send order normally
-    const orderDetails = {
-      customerNumber: mobile,
-      customerName: name,
-      customerWish: wish,
-      customerAddress: address,
-      deliveryDate: deliveryDate,
-      paymentMethod: paymentMethod.value,
-      total: total,
-      items: cart.map(item => ({ item: item.name, price: item.price }))
-    };
-
-    
-  try {
-      const response = await fetch("http://localhost:5000/order", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(orderDetails)
+    function updateCart() {
+      tbody.innerHTML = "";
+      total = 0;
+      cart.forEach((item, index) => {
+        total += item.price;
+        tbody.innerHTML += `
+          <tr>
+            <td>${item.name}</td>
+            <td>₹${item.price}</td>
+            <td><button class="btn btn-sm btn-danger" onclick="removeItem(${index})">Remove</button></td>
+          </tr>`;
       });
-
-      const data = await response.json();
-
-      if (data.success) {
-        alert("Order placed successfully for " + deliveryDate + "! WhatsApp confirmation sent.");
-        cart = [];
-        updateCart();
-        document.getElementById("customer-name").value = "";
-        document.getElementById("customer-mobile").value = "";
-        document.getElementById("customer-wish").value = "";
-        document.getElementById("customer-address").value = "";
-        document.getElementById("delivery-date").value = "";
-      } else {
-        alert("Error placing order: " + data.error);
-      }
-
-    } catch (error) {
-      console.error("Error sending order:", error);
-      alert("Failed to send order. Please try again.");
+      document.getElementById("total-price").innerText = total;
+      localStorage.setItem("cart", JSON.stringify(cart));
     }
-  }
 
-  updateCart();
-  
-</script>
+    function removeItem(index) {
+      cart.splice(index, 1);
+      updateCart();
+    }
 
-<script>
-  // Function to generate WhatsApp link with order details
-  function generateWhatsAppLink(paymentMethod) {
-    let name = document.getElementById("customer-name").value.trim();
-    let mobile = document.getElementById("customer-mobile").value.trim();
-    let wish = document.getElementById("customer-wish").value.trim();
-    let address = document.getElementById("customer-address").value.trim();
-    let deliveryDate = document.getElementById("delivery-date").value;
+    // Payment option toggle
+    document.querySelectorAll("input[name='payment']").forEach(input => {
+      input.addEventListener("change", function() {
+        document.querySelectorAll(".qr-section").forEach(qr => qr.style.display = "none");
+        document.getElementById("checkout-btn").style.display = "none";
 
-    // Order items
-    let itemsList = cart.map(item => `• ${item.name} - ₹${item.price}`).join("%0A");
+        if (this.value === "GPay") {
+          document.getElementById("qr-gpay").style.display = "block";
+        } else if (this.value === "PhonePe") {
+          document.getElementById("qr-phonepe").style.display = "block";
+        } else if (this.value === "COD") {
+          document.getElementById("checkout-btn").style.display = "inline-block";
+        }
+      });
+    });
 
-    // Build message
-    let message = `Hi, I have made the payment via ${paymentMethod}.%0A%0A` +
-                  `*Customer Details*%0A` +
-                  `Name: ${name}%0A` +
-                  `Mobile: ${mobile}%0A` +
-                  `Wish: ${wish}%0A` +
-                  `Address: ${address}%0A` +
-                  `Delivery Date: ${deliveryDate}%0A%0A` +
-                  `*Order Items*%0A${itemsList}%0A%0A` +
-                  `Total: ₹${total}%0A%0A` +
-                  `Please find the attached payment screenshot.`;
+    function validateCustomer() {
+      let name = document.getElementById("customer-name").value.trim();
+      let mobile = document.getElementById("customer-mobile").value.trim();
+      let wish = document.getElementById("customer-wish").value.trim();
+      let address = document.getElementById("customer-address").value.trim();
+      let deliveryDate = document.getElementById("delivery-date").value;
 
-    return `https://wa.me/918625962810?text=${message}`;
-  }
+      if (name === "" || mobile === "" || wish === "" || address === "" || deliveryDate === "") {
+        alert("Please fill in all customer details and select delivery date.");
+        return false;
+      }
+      if (!/^[0-9]{10}$/.test(mobile)) {
+        alert("Please enter a valid 10-digit mobile number.");
+        return false;
+      }
+      let today = new Date(); today.setHours(0,0,0,0);
+      let chosen = new Date(deliveryDate);
+      if (chosen <= today) {
+        alert("Delivery date must be at least tomorrow.");
+        return false;
+      }
+      if (cart.length === 0) {
+        alert("Your cart is empty!");
+        return false;
+      }
+      return true;
+    }
 
- document.getElementById("confirm-gpay").addEventListener("change", function() {
-  let btn = document.getElementById("whatsapp-gpay");
-  if (this.checked) {
-    btn.classList.remove("disabled");
-    btn.href = generateWhatsAppLink("Google Pay");
+    function generateWhatsAppLink(paymentMethod) {
+      let name = document.getElementById("customer-name").value.trim();
+      let mobile = document.getElementById("customer-mobile").value.trim();
+      let wish = document.getElementById("customer-wish").value.trim();
+      let address = document.getElementById("customer-address").value.trim();
+      let deliveryDate = document.getElementById("delivery-date").value;
 
-// For GPay
-btn.addEventListener("click", function() {
-  setTimeout(() => {
-    cart = [];
-    total = 0;
+      let itemsList = cart.map(item => `• ${item.name} - ₹${item.price}`).join("%0A");
+
+      let message = `*Cake Order*%0A%0A` +
+                    `*Customer Details*%0AName: ${name}%0A` +
+                    `Mobile: ${mobile}%0A` +
+                    `Wish: ${wish}%0A` +
+                    `Address: ${address}%0A` +
+                    `Delivery Date: ${deliveryDate}%0A%0A` +
+                    `*Order Items*%0A${itemsList}%0A%0ATotal: ₹${total}%0A` +
+                    `Payment Method: ${paymentMethod}`;
+
+      return `https://wa.me/918625962810?text=${message}`;
+    }
+
+    // GPay
+    document.getElementById("confirm-gpay").addEventListener("change", function() {
+      let btn = document.getElementById("whatsapp-gpay");
+      if (this.checked) {
+        btn.classList.remove("disabled");
+        btn.href = generateWhatsAppLink("Google Pay");
+        btn.onclick = () => {
+          if (!validateCustomer()) return false;
+          setTimeout(() => {
+            cart = []; total = 0; updateCart(); alert("Order sent via WhatsApp! ✅");
+          }, 500);
+        }
+      } else {
+        btn.classList.add("disabled");
+        btn.removeAttribute("href");
+      }
+    });
+
+    // PhonePe
+    document.getElementById("confirm-phonepe").addEventListener("change", function() {
+      let btn = document.getElementById("whatsapp-phonepe");
+      if (this.checked) {
+        btn.classList.remove("disabled");
+        btn.href = generateWhatsAppLink("PhonePe");
+        btn.onclick = () => {
+          if (!validateCustomer()) return false;
+          setTimeout(() => {
+            cart = []; total = 0; updateCart(); alert("Order sent via WhatsApp! ✅");
+          }, 500);
+        }
+      } else {
+        btn.classList.add("disabled");
+        btn.removeAttribute("href");
+      }
+    });
+
+    // COD
+    function placeOrder() {
+      if (!validateCustomer()) return;
+      let link = generateWhatsAppLink("Cash on Delivery");
+      window.open(link, "_blank");
+      cart = []; total = 0; updateCart(); alert("COD Order placed successfully! ✅");
+    }
+
     updateCart();
-    showOrderSuccess(); // ✅ show success alert
-  }, 1000);
-});
-  } else {
-    btn.classList.add("disabled");
-    btn.removeAttribute("href");
-  }
-});
-
-document.getElementById("confirm-phonepe").addEventListener("change", function() {
-  let btn = document.getElementById("whatsapp-phonepe");
-  if (this.checked) {
-    btn.classList.remove("disabled");
-    btn.href = generateWhatsAppLink("PhonePe");
-
-  // For PhonePe
-btn.addEventListener("click", function() {
-  setTimeout(() => {
-    cart = [];
-    total = 0;
-    updateCart();
-    showOrderSuccess(); // ✅ show success alert
-  }, 1000);
-});
-  } else {
-    btn.classList.add("disabled");
-    btn.removeAttribute("href");
-  }
-});
-
-</script>
-<script>
-  async function placeOrder() {
-  let name = document.getElementById("customer-name").value.trim();
-  let mobile = document.getElementById("customer-mobile").value.trim();
-  let wish = document.getElementById("customer-wish").value.trim();
-  let address = document.getElementById("customer-address").value.trim();
-  let deliveryDate = document.getElementById("delivery-date").value;
-  let paymentMethod = document.querySelector('input[name="payment"]:checked');
-
-  // Validation
-  if (name === "" || mobile === "" || wish === "" || address === "" || deliveryDate === "") {
-    alert("Please fill in all customer details and select delivery date.");
-    return;
-  }
-
-  if (!/^[0-9]{10}$/.test(mobile)) {
-    alert("Please enter a valid 10-digit mobile number.");
-    return;
-  }
-
-  // Validate date (must be at least tomorrow)
-  let today = new Date();
-  today.setHours(0, 0, 0, 0);
-  let chosenDate = new Date(deliveryDate);
-  if (chosenDate <= today) {
-    alert("Delivery date must be at least one day later.");
-    return;
-  }
-
-  if (!paymentMethod) {
-    alert("Please select a payment method.");
-    return;
-  }
-
-  if (cart.length === 0) {
-    alert("Your cart is empty!");
-    return;
-  }
-
-  // Build common WhatsApp order message
-  let itemsList = cart.map(item => `• ${item.name} - ₹${item.price}`).join("%0A");
-  let message =
-      `*New Cake Order!*%0A%0A` +
-      `*Customer Details*%0A` +
-      `Name: ${name}%0A` +
-      `Mobile: ${mobile}%0A` +
-      `Wish: ${wish}%0A` +
-      `Address: ${address}%0A` +
-      `Delivery Date: ${deliveryDate}%0A%0A` +
-      `*Order Items*%0A${itemsList}%0A%0A` +
-      `Total: ₹${total}%0A%0A`;
-
-  if (paymentMethod.value === "COD") {
-    message += `Payment Method: Cash on Delivery`;
-    let whatsappLink = `https://wa.me/918625962810?text=${message}`;
-    window.open(whatsappLink, "_blank");
-   
-  }
-    // ✅ Clear cart after sending
-  cart = [];
-  total = 0;
-  updateCart();
-  showOrderSuccess();
-  return;
-}
-
-</script>
-
+  </script>
 </body>
 </html>
