@@ -106,7 +106,7 @@
 
   <!-- ✅ Cart -->
   <li class="nav-item position-relative">
-    <a class="nav-link" href="cart.html"><i class="fas fa-cart-shopping"></i> Cart</a>
+    <a class="nav-link" href="cart.html" onclick="goToCart()"><i class="fas fa-cart-shopping"></i> Cart</a>
     <span id="cart-count" class="cart-count">0</span>
   </li>
    <!-- Profile Section -->
@@ -284,7 +284,24 @@
     <p class="text-center">&copy; 2025 Mom's Cake. All Rights Reserved.</p>
   </div>
 </footer>
-
+<script>
+  const user = JSON.parse(localStorage.getItem("user"));
+  if (!user) {
+    alert("You must login first to access the cart!");
+    window.location.href = "login.html";
+  }
+</script>
+<script>
+  function goToCart() {
+    const user = JSON.parse(localStorage.getItem("user"));
+    if (user) {
+      window.location.href = "cart.html";
+    } else {
+      alert("Please login to view your cart!");
+      window.location.href = "login.html";
+    }
+  }
+</script>
 <script>
   function showOrderSuccess() {
   alert("✅ Your order has been sent successfully! Please share payment screenshot on WhatsApp (if applicable).");
@@ -431,5 +448,57 @@
 
     updateCart();
   </script>
+  <script>
+  // Load cart count from localStorage
+
+  document.getElementById("cart-count").innerText = cart.length;
+
+  // Add to Cart button protection
+  document.querySelectorAll(".add-to-cart").forEach(btn => {
+    btn.addEventListener("click", () => {
+      const user = JSON.parse(localStorage.getItem("user"));
+      if (!user) {
+        alert("Please login first to add items to cart!");
+        window.location.href = "login.html";
+        return;
+      }
+
+      const item = {
+        name: btn.dataset.name,
+        price: parseInt(btn.dataset.price)
+      };
+
+      cart.push(item);
+      localStorage.setItem("cart", JSON.stringify(cart));
+      document.getElementById("cart-count").innerText = cart.length;
+      alert(item.name + " added to cart!");
+    });
+  });
+
+  // Wishlist hearts protection (optional)
+  document.querySelectorAll(".like-btn").forEach(heart => {
+    heart.addEventListener("click", () => {
+      const user = JSON.parse(localStorage.getItem("user"));
+      if (!user) {
+        alert("Please login first to use Wishlist!");
+        window.location.href = "login.html";
+        return;
+      }
+      heart.classList.toggle("liked");
+    });
+  });
+
+  // Protect Cart link in navbar
+  document.querySelectorAll("a[href='cart.html']").forEach(cartLink => {
+    cartLink.addEventListener("click", (e) => {
+      const user = JSON.parse(localStorage.getItem("user"));
+      if (!user) {
+        e.preventDefault();
+        alert("Please login first to view your cart!");
+        window.location.href = "login.html";
+      }
+    });
+  });
+</script>
 </body>
 </html>

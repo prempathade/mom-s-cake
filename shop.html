@@ -92,7 +92,7 @@ body {
 
   <!-- ✅ Cart -->
   <li class="nav-item position-relative">
-    <a class="nav-link" href="cart.html"><i class="fas fa-cart-shopping"></i> Cart</a>
+    <a class="nav-link" href="cart.html" onclick="goToCart()"><i class="fas fa-cart-shopping"></i> Cart</a>
     <span id="cart-count" class="cart-count">0</span>
   </li>
    <!-- 🔹 Profile Section -->
@@ -425,15 +425,22 @@ body {
 
 <script>
   let cart = JSON.parse(localStorage.getItem("cart")) || [];
-  let cartCount = cart.length;
-  document.getElementById("cart-count").innerText = cartCount;
+  document.getElementById("cart-count").innerText = cart.length;
 
   document.querySelectorAll(".add-to-cart").forEach(btn => {
     btn.addEventListener("click", () => {
+      const user = JSON.parse(localStorage.getItem("user"));
+      if (!user) {
+        alert("Please login first to add items to cart!");
+        window.location.href = "login.html";
+        return;
+      }
+
       const item = {
         name: btn.dataset.name,
         price: parseInt(btn.dataset.price)
       };
+
       cart.push(item);
       localStorage.setItem("cart", JSON.stringify(cart));
       document.getElementById("cart-count").innerText = cart.length;
@@ -441,9 +448,19 @@ body {
     });
   });
 
+  // Wishlist hearts (optional, can also protect them the same way)
   document.querySelectorAll(".like-btn").forEach(heart => {
-    heart.addEventListener("click", () => heart.classList.toggle("liked"));
+    heart.addEventListener("click", () => {
+      const user = JSON.parse(localStorage.getItem("user"));
+      if (!user) {
+        alert("Please login first to use Wishlist!");
+        window.location.href = "login.html";
+        return;
+      }
+      heart.classList.toggle("liked");
+    });
   });
 </script>
+
 </body>
 </html>

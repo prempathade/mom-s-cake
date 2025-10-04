@@ -84,5 +84,5 @@ app.post("/update-profile", (req, res) => {
 
 // ✅ Start server
 app.listen(5000, () => {
-  console.log("🚀 Server running on www.momscake.shop");
+  console.log("🚀 Server running on www.moms-cake.gamer.gd");
 });

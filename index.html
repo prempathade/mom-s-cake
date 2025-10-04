@@ -94,7 +94,7 @@
 
   <!-- ✅ Cart -->
   <li class="nav-item position-relative">
-    <a class="nav-link" href="cart.html"><i class="fas fa-cart-shopping"></i> Cart</a>
+    <a class="nav-link" href="cart.html" onclick="goToCart()"><i class="fas fa-cart-shopping"></i> Cart</a>
     <span id="cart-count" class="cart-count">0</span>
   </li>
    <!-- Profile Section -->
@@ -238,93 +238,96 @@
 </footer>
 
 <!-- Script -->
-<script>
-  let cart = JSON.parse(localStorage.getItem("cart")) || [];
-  let cartCount = cart.length;
-  document.getElementById("cart-count").innerText = cartCount;
 
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  console.log("auth+cart script loaded");
+
+  // get elements & state
+  let cart = JSON.parse(localStorage.getItem("cart")) || [];
+  const user = JSON.parse(localStorage.getItem("user")) || null;
+
+  const cartCountEl = document.getElementById("cart-count");
+  if (cartCountEl) cartCountEl.innerText = cart.length;
+
+  // show profile name/pic if logged in
+  if (user) {
+    const profileNameEl = document.getElementById("profile-name");
+    if (profileNameEl) profileNameEl.innerText = user.name || "Profile";
+
+    const profilePicEl = document.getElementById("profile-pic"); // matches your HTML
+    if (profilePicEl && user.profile_pic) profilePicEl.src = user.profile_pic;
+  }
+
+  // define goToCart (for any inline onclicks)
+  window.goToCart = function() {
+    const cur = JSON.parse(localStorage.getItem("user")) || null;
+    if (!cur) {
+      alert("Please login first to view your cart!");
+      window.location.href = "login.html";
+      return;
+    }
+    window.location.href = "cart.html";
+  };
+
+  // Add-to-cart buttons: require login, show alert then redirect
   document.querySelectorAll(".add-to-cart").forEach(btn => {
     btn.addEventListener("click", () => {
+      const cur = JSON.parse(localStorage.getItem("user")) || null;
+      if (!cur) {
+        alert("Please login first to add items to cart!");
+        window.location.href = "login.html";
+        return;
+      }
+
       const item = {
-        name: btn.dataset.name,
-        price: parseInt(btn.dataset.price)
+        name: btn.dataset.name || "Item",
+        price: Number(btn.dataset.price) || 0
       };
       cart.push(item);
       localStorage.setItem("cart", JSON.stringify(cart));
-      document.getElementById("cart-count").innerText = cart.length;
+      if (cartCountEl) cartCountEl.innerText = cart.length;
       alert(item.name + " added to cart!");
     });
   });
 
+  // Wishlist hearts: require login
   document.querySelectorAll(".like-btn").forEach(heart => {
-    heart.addEventListener("click", () => heart.classList.toggle("liked"));
+    heart.addEventListener("click", () => {
+      const cur = JSON.parse(localStorage.getItem("user")) || null;
+      if (!cur) {
+        alert("Please login first to use Wishlist!");
+        window.location.href = "login.html";
+        return;
+      }
+      heart.classList.toggle("liked");
+    });
   });
-</script>
-<script>
-  async function placeOrder() {
-    const orderData = {
-      name: "Prem", // you can replace with login user name
-      items: [
-        { name: "Chocolate Cake", qty: 1 }
-      ],
-      total: 499
-    };
 
-    try {
-      const response = await fetch("http://localhost:5000/order", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify(orderData)
-      });
+  // Protect cart link in navbar
+  document.querySelectorAll("a[href='cart.html']").forEach(link => {
+    link.addEventListener("click", (e) => {
+      const cur = JSON.parse(localStorage.getItem("user")) || null;
+      if (!cur) {
+        e.preventDefault();
+        alert("Please login first to view your cart!");
+        window.location.href = "login.html";
+      }
+    });
+  });
 
-      const result = await response.json();
-      alert(result.message); // show success or error message
-    } catch (error) {
-      console.error("Error:", error);
-      alert("Failed to send order!");
-    }
-  }
-</script>
-<script>
-  // Load user info if logged in
-const user = JSON.parse(localStorage.getItem("user"));
-if (user) {
-  document.getElementById("profile-name").innerText = user.name || "Profile";
-  // If user has uploaded profile picture, load it
-  if (user.profile_pic) {
-    document.getElementById("profile-img").src = user.profile_pic;
-  }
-}
-
-// Logout function
-function logout() {
-  localStorage.removeItem("user");
-  alert("Logged out successfully!");
-  window.location.href = "login.html";
-}
-
-
-</script>
-<script>
-  // Load profile from localStorage (after login/signup)
-  const userProfile = JSON.parse(localStorage.getItem("userProfile")) || null;
-
-  if (userProfile) {
-    document.getElementById("profile-name").innerText = userProfile.name || "User";
-    if (userProfile.image) {
-      document.getElementById("profile-pic").src = userProfile.image;
-    }
-  }
-
-  // Logout
-  function logoutUser() {
-    localStorage.removeItem("userProfile");
+  // logout helpers
+  window.logoutUser = function() {
+    localStorage.removeItem("user");
+    localStorage.removeItem("userProfile"); // optional
     alert("Logged out successfully!");
     window.location.href = "login.html";
-  }
+  };
+
+  window.logout = window.logoutUser;
+});
 </script>
+
 
 </body>
 </html>
